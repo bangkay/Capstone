@@ -3,7 +3,6 @@ $(document).ready(function () {
 	var teacherId = 0;
 	var subId = 0;
 	var subName = "";
-	var test = "";
 	
 	studId = parseInt($('#txtStudId').val());
 	getCurrentRecordForInstructors(studId);
@@ -17,11 +16,110 @@ $(document).ready(function () {
 	});
 	
 	$('#btnSubmit').click(function () {
+		// Get Overall Evaluation Score
+		var runningTotal = 0;
+		var remarks = "";
+		var question_count = 0;
+		var lastId = 0;
+		var rows = $('#items').find('tr');
+		
+		$.each(rows, function (index, value) {
+			var $tds = $(this).find('td');
+			
+			var r5 = $tds.eq(2);
+			var r4 = $tds.eq(3);
+			var r3 = $tds.eq(4);
+			var r2 = $tds.eq(5);
+			var r1 = $tds.eq(6);
+			
+			var rb5 = $(r5).find('input[type=radio]');
+			var rb5Checked = $(rb5).is(':checked');
+			if (rb5Checked) {
+				runningTotal += parseInt(rb5.val());
+			}
+			else {
+				runningTotal += 0;
+			}
+			
+			var rb4 = $(r4).find('input[type=radio]');
+			var rb4Checked = $(rb4).is(':checked');
+			if (rb4Checked) {
+				runningTotal += parseInt(rb4.val());
+			}
+			else {
+				runningTotal += 0;
+			}
+			
+			var rb3 = $(r3).find('input[type=radio]');
+			var rb3Checked = $(rb3).is(':checked');
+			if (rb3Checked) {
+				runningTotal += parseInt(rb3.val());
+			}
+			else {
+				runningTotal += 0;
+			}
+			
+			var rb2 = $(r2).find('input[type=radio]');
+			var rb2Checked = $(rb2).is(':checked');
+			if (rb2Checked) {
+				runningTotal += parseInt(rb2.val());
+			}
+			else {
+				runningTotal += 0;
+			}
+			
+			var rb1 = $(r1).find('input[type=radio]');
+			var rb1Checked = $(rb1).is(':checked');
+			if (rb1Checked) {
+				runningTotal += parseInt(rb1.val());
+			}
+			else {
+				runningTotal += 0;
+			}
+			
+			question_count++;
+		});
+		
+		console.log(question_count);
+		
+		if (runningTotal >= 40 && runningTotal <= 50)
+			remarks = "Excellent";
+		else if (runningTotal >= 30 && runningTotal <= 39)
+			remarks = "Very Satisfactory";
+		else if (runningTotal >= 20 && runningTotal <= 29)
+			remarks = "Very Good";
+		else if (runningTotal >= 10 && runningTotal <= 19)
+			remarks = "Good";
+		else if (runningTotal >= 1 && runningTotal <= 9)
+			remarks = "Need Improvement"
+		else
+			remarks = "";
+		
+		var facultyId = teacherId;
+		var subjectId = $('#drpSubj').val();
+		var score = runningTotal;
+		
+		$.ajax({
+			type: "POST",
+			url: "SaveEvaluation.php",
+			data: { facultyId: facultyId, subjectId: subjectId, score: score, remarks: remarks },
+			success: function (result) {
+				if (result[0].status == 1) {
+					alert(result[0].message);
+					//lastId = ;
+				}
+			},
+			error: function (error) {
+				console.log(error);
+			}
+		});
+		
 		// Get score per category
 		var count = 1;
 		var subItemCount = 0;
 		var perCategoryRunningTotal = 0;
 		var perCategoryAverage = 0;
+		var catRunningTotal = 0;
 		
 		var catHeaders = $('#items').find('tr td p.category-header');
 		
@@ -99,10 +197,13 @@ $(document).ready(function () {
 			
 			perCategoryAverage = perCategoryRunningTotal / subItemCount;
 			
+			console.log(perCategoryAverage);
+			
+			/*
 			$.ajax({
 				type: "POST",
-				url: "SavePerCategory.php",
-				data: { facultyId: facultyId, subjectId: subjectId, score: score, remarks: remarks },
+				url: "SavePerCategoryAverage.php",
+				data: { A: perCategoryAverage, B: perCategoryAverage, C: perCategoryAverage, D: perCategoryAverage, E: perCategoryAverage },
 				success: function (result) {
 					if (result[0].status == 1)
 						alert(result[0].message);
@@ -111,101 +212,9 @@ $(document).ready(function () {
 					console.log(error);
 				}
 			});
+			*/
 			
 			count++;
-		});
-		
-		// Get Overall Evaluation Score
-		var runningTotal = 0;
-		var remarks = "";
-		var temp = 0;
-		var rows = $('#items').find('tr');
-		
-		$.each(rows, function (index, value) {
-			var $tds = $(this).find('td');
-			
-			var r5 = $tds.eq(2);
-			var r4 = $tds.eq(3);
-			var r3 = $tds.eq(4);
-			var r2 = $tds.eq(5);
-			var r1 = $tds.eq(6);
-			
-			var rb5 = $(r5).find('input[type=radio]');
-			var rb5Checked = $(rb5).is(':checked');
-			if (rb5Checked) {
-				runningTotal += parseInt(rb5.val());
-			}
-			else {
-				runningTotal += 0;
-			}
-			
-			var rb4 = $(r4).find('input[type=radio]');
-			var rb4Checked = $(rb4).is(':checked');
-			if (rb4Checked) {
-				runningTotal += parseInt(rb4.val());
-			}
-			else {
-				runningTotal += 0;
-			}
-			
-			var rb3 = $(r3).find('input[type=radio]');
-			var rb3Checked = $(rb3).is(':checked');
-			if (rb3Checked) {
-				runningTotal += parseInt(rb3.val());
-			}
-			else {
-				runningTotal += 0;
-			}
-			
-			var rb2 = $(r2).find('input[type=radio]');
-			var rb2Checked = $(rb2).is(':checked');
-			if (rb2Checked) {
-				runningTotal += parseInt(rb2.val());
-			}
-			else {
-				runningTotal += 0;
-			}
-			
-			var rb1 = $(r1).find('input[type=radio]');
-			var rb1Checked = $(rb1).is(':checked');
-			if (rb1Checked) {
-				runningTotal += parseInt(rb1.val());
-			}
-			else {
-				runningTotal += 0;
-			}
-		});
-		
-		if (runningTotal >= 40 && runningTotal <= 50)
-			remarks = "Excellent";
-		else if (runningTotal >= 30 && runningTotal <= 39)
-			remarks = "Very Satisfactory";
-		else if (runningTotal >= 20 && runningTotal <= 29)
-			remarks = "Very Good";
-		else if (runningTotal >= 10 && runningTotal <= 19)
-			remarks = "Good";
-		else if (runningTotal >= 1 && runningTotal <= 9)
-			remarks = "Need Improvement"
-		else
-			remarks = "";
-		
-		var facultyId = teacherId;
-		var subjectId = $('#drpSubj').val();
-		var score = runningTotal;
-		
-		console.log(score + ' ' + remarks);
-		
-		$.ajax({
-			type: "POST",
-			url: "SaveEvaluation.php",
-			data: { facultyId: facultyId, subjectId: subjectId, score: score, remarks: remarks },
-			success: function (result) {
-				if (result[0].status == 1)
-					alert(result[0].message);
-			},
-			error: function (error) {
-				console.log(error);
-			}
 		});
 	});	
 });

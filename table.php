@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-
 <?php
-include("config_db.php");
-
 session_start();
+
+if ($_SESSION['isLoggedIn'] === true) 
+{
+	include("config_db.php");
 ?>
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -12,8 +13,8 @@ session_start();
 <meta charset="UTF-8">
 
 
-	<script src="../evaluation-system/js/jquery-1.11.3.js"></script>
-	<script src="../evaluation-system/js/evaluation.js"></script>
+	<script src="../capstone/js/jquery-1.11.3.js"></script>
+	<script src="../capstone/js/evaluation.js"></script>
 	<link rel="stylesheet" href="css/customcss.css">
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -105,4 +106,11 @@ session_start();
 </body>
 <?php include("footer.php")?>
 
-</html>                                		
+</html>
+<?php 
+}
+else
+{
+	header("location: index.php");
+}	
+?>

@@ -1,13 +1,13 @@
-<!-- HEADER -->
-<?php include("header.php"); ?>
-<!-- END -->
+<?php
+session_start();
 
-<!-- NAVIGATION -->
-<?php include("navigation.php"); ?>
-<!-- END -->
-
-<!-- CONTENT -->
-<div id="page-wrapper">
+if ($_SESSION['isAdminLoggedIn'] === true)
+{
+	include("header.php");
+	include("navigation.php");
+?>
+	<!-- CONTENT -->
+	<div id="page-wrapper">
 
             <div class="container-fluid">
 
@@ -124,7 +124,10 @@
         </div>
         <!-- /#page-wrapper -->
 <!-- END -->
-
-<!-- FOOTER -->
-<?php include("footer.php"); ?>
-<!-- END -->
+<?php
+	include("footer.php");
+}
+else
+{
+	header("location: index.php");
+}?>

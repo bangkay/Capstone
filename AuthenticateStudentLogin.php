@@ -12,6 +12,8 @@ if ($count > 0)
 	session_start();
 	
 	$_SESSION['studentId'] = $studId;
+	$_SESSION['isLoggedIn'] = true;
+	
 	header("location: table.php");
 }
 ?>

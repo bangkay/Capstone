@@ -12,7 +12,13 @@ $result = mysql_query("SELECT * FROM users WHERE user_name = '".$username."' AND
 $count = mysql_num_rows($result);
 
 if ($count == 1)
+{
+	session_start();
+	
+	$_SESSION['isAdminLoggedIn'] = true;
+	
 	header("location: AdminDashboard.php");
+}
 else
 	header("location: index.php");
 ?>
