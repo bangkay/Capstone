@@ -12,7 +12,7 @@ mysql_query($query);
 $lastId = mysql_insert_id();
 
 $array[] = array('status' => 1,
-				 'messsage' => "Teacher Evaluation Successful.",
+				 'message' => "Teacher Evaluation Successful.",
 				 'returnid' => $lastId);
 				
 echo json_encode($array);

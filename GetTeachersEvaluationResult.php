@@ -5,13 +5,13 @@ $teacherId = $_GET['teacherId'];
 
 $query = "SELECT *
 		  FROM
-				result
+				result_student
 					INNER JOIN faculty
-						ON result.F_ID = faculty.F_ID
+						ON result_student.F_ID = faculty.F_ID
 					INNER JOIN subjects
-						ON result.S_ID = subjects.Sub_ID
+						ON result_student.S_ID = subjects.Sub_ID
 		  WHERE
-				result.F_ID = '".$teacherId."' ";
+				result_student.F_ID = '".$teacherId."' ";
 
 $result = mysql_query($query);
 

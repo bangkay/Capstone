@@ -1,8 +1,6 @@
 $(document).ready(function () {
 	var studId = 0;
 	var teacherId = 0;
-	var subId = 0;
-	var subName = "";
 	
 	studId = parseInt($('#txtStudId').val());
 	getCurrentRecordForInstructors(studId);
@@ -20,8 +18,18 @@ $(document).ready(function () {
 		var runningTotal = 0;
 		var remarks = "";
 		var question_count = 0;
-		var lastId = 0;
+		var lastEntryId = 0;
 		var rows = $('#items').find('tr');
+		
+		var count = 1;
+		var subItemCount = 0;
+		var perCategoryRunningTotal = 0;
+		var perCategoryAverage = 0;
+		var catRunningTotal = 0;
+		
+		var facultyId = 0;
+		var subjectId = $('#drpSubj').val();
+		var score = 0;
 		
 		$.each(rows, function (index, value) {
 			var $tds = $(this).find('td');
@@ -80,8 +88,6 @@ $(document).ready(function () {
 			question_count++;
 		});
 		
-		console.log(question_count);
-		
 		if (runningTotal >= 40 && runningTotal <= 50)
 			remarks = "Excellent";
 		else if (runningTotal >= 30 && runningTotal <= 39)
@@ -95,126 +101,106 @@ $(document).ready(function () {
 		else
 			remarks = "";
 		
-		var facultyId = teacherId;
-		var subjectId = $('#drpSubj').val();
-		var score = runningTotal;
+		facultyId = teacherId;
+		subjectId = $('#drpSubj').val();
+		score = runningTotal;
 		
 		$.ajax({
 			type: "POST",
 			url: "SaveEvaluation.php",
 			data: { facultyId: facultyId, subjectId: subjectId, score: score, remarks: remarks },
+			dataType: "json",
 			success: function (result) {
 				if (result[0].status == 1) {
 					alert(result[0].message);
-					//lastId = ;
+					lastEntryId = result[0].returnid;
+					
+					// Get score per category
+					var catHeaders = $('#items').find('tr td p.category-header');
+						
+					$.each(catHeaders, function (index, value) {
+						var catSubItems = $('#items').find('tr.category_questions' + count);
+						subItemCount = 0;
+						perCategoryRunningTotal = 0;
+						
+						$.each(catSubItems, function (index, value) {
+							var $tds = $(this).find('td');
+							
+							var r5 = $tds.eq(2);
+							var r4 = $tds.eq(3);
+							var r3 = $tds.eq(4);
+							var r2 = $tds.eq(5);
+							var r1 = $tds.eq(6);
+								
+							var rb5 = $(r5).find('input[type=radio]');
+							var rb5Checked = $(rb5).is(':checked');
+							if (rb5Checked) {
+								catRunningTotal += parseInt(rb5.val());
+								perCategoryRunningTotal += parseInt(rb5.val());
+							}
+							else {
+								catRunningTotal += 0;
+								perCategoryRunningTotal += 0;
+							}
+							
+							var rb4 = $(r4).find('input[type=radio]');
+							var rb4Checked = $(rb4).is(':checked');
+							if (rb4Checked) {
+								catRunningTotal += parseInt(rb4.val());
+								perCategoryRunningTotal += parseInt(rb4.val());
+							}
+							else {
+								catRunningTotal += 0;
+								perCategoryRunningTotal += 0;
+							}
+							
+							var rb3 = $(r3).find('input[type=radio]');
+							var rb3Checked = $(rb3).is(':checked');
+							if (rb3Checked) {
+								catRunningTotal += parseInt(rb3.val());
+								perCategoryRunningTotal += parseInt(rb3.val());
+							}
+							else {
+								catRunningTotal += 0;
+								perCategoryRunningTotal += 0;
+							}
+							
+							var rb2 = $(r2).find('input[type=radio]');
+							var rb2Checked = $(rb2).is(':checked');
+							if (rb2Checked) {
+								catRunningTotal += parseInt(rb2.val());
+								perCategoryRunningTotal += parseInt(rb2.val());
+							}
+							else {
+								catRunningTotal += 0;
+								perCategoryRunningTotal += 0;
+							}
+							
+							var rb1 = $(r1).find('input[type=radio]');
+							var rb1Checked = $(rb1).is(':checked');
+							if (rb1Checked) {
+								catRunningTotal += parseInt(rb1.val());
+								perCategoryRunningTotal += parseInt(rb1.val());
+							}
+							else {
+								catRunningTotal += 0;
+								perCategoryRunningTotal += 0;
+							}
+								
+							subItemCount++;
+						});
+							
+						perCategoryAverage = perCategoryRunningTotal / subItemCount;
+						
+						savePerCategoryAverage(lastEntryId, count, perCategoryAverage);
+						
+						count++;
+					});
 				}
 			},
 			error: function (error) {
 				console.log(error);
 			}
-		});
-		
-		// Get score per category
-		var count = 1;
-		var subItemCount = 0;
-		var perCategoryRunningTotal = 0;
-		var perCategoryAverage = 0;
-		var catRunningTotal = 0;
-		
-		var catHeaders = $('#items').find('tr td p.category-header');
-		
-		$.each(catHeaders, function (index, value) {
-			var catSubItems = $('#items').find('tr.category_questions' + count);
-			subItemCount = 0;
-			perCategoryRunningTotal = 0;
-			
-			$.each(catSubItems, function (index, value) {
-				var $tds = $(this).find('td');
-				
-				var r5 = $tds.eq(2);
-				var r4 = $tds.eq(3);
-				var r3 = $tds.eq(4);
-				var r2 = $tds.eq(5);
-				var r1 = $tds.eq(6);
-				
-				var rb5 = $(r5).find('input[type=radio]');
-				var rb5Checked = $(rb5).is(':checked');
-				if (rb5Checked) {
-					catRunningTotal += parseInt(rb5.val());
-					perCategoryRunningTotal += parseInt(rb5.val());
-				}
-				else {
-					catRunningTotal += 0;
-					perCategoryRunningTotal += 0;
-				}
-				
-				var rb4 = $(r4).find('input[type=radio]');
-				var rb4Checked = $(rb4).is(':checked');
-				if (rb4Checked) {
-					catRunningTotal += parseInt(rb4.val());
-					perCategoryRunningTotal += parseInt(rb4.val());
-				}
-				else {
-					catRunningTotal += 0;
-					perCategoryRunningTotal += 0;
-				}
-				
-				var rb3 = $(r3).find('input[type=radio]');
-				var rb3Checked = $(rb3).is(':checked');
-				if (rb3Checked) {
-					catRunningTotal += parseInt(rb3.val());
-					perCategoryRunningTotal += parseInt(rb3.val());
-				}
-				else {
-					catRunningTotal += 0;
-					perCategoryRunningTotal += 0;
-				}
-				
-				var rb2 = $(r2).find('input[type=radio]');
-				var rb2Checked = $(rb2).is(':checked');
-				if (rb2Checked) {
-					catRunningTotal += parseInt(rb2.val());
-					perCategoryRunningTotal += parseInt(rb2.val());
-				}
-				else {
-					catRunningTotal += 0;
-					perCategoryRunningTotal += 0;
-				}
-				
-				var rb1 = $(r1).find('input[type=radio]');
-				var rb1Checked = $(rb1).is(':checked');
-				if (rb1Checked) {
-					catRunningTotal += parseInt(rb1.val());
-					perCategoryRunningTotal += parseInt(rb1.val());
-				}
-				else {
-					catRunningTotal += 0;
-					perCategoryRunningTotal += 0;
-				}
-				
-				subItemCount++;
-			});
-			
-			perCategoryAverage = perCategoryRunningTotal / subItemCount;
-			
-			console.log(perCategoryAverage);
-			
-			/*
-			$.ajax({
-				type: "POST",
-				url: "SavePerCategoryAverage.php",
-				data: { A: perCategoryAverage, B: perCategoryAverage, C: perCategoryAverage, D: perCategoryAverage, E: perCategoryAverage },
-				success: function (result) {
-					if (result[0].status == 1)
-						alert(result[0].message);
-				},
-				error: function (error) {
-					console.log(error);
-				}
-			});
-			*/
-			
-			count++;
 		});
 	});	
 });
@@ -246,6 +232,23 @@ function getCurrentRecordForSubjects(student_id, teacher_id) {
 			$.each(result, function (index, value) {
 				$('<option value=' + value.Subject_Id + '>' + value.Subject_Name + '</option>').appendTo('#drpSubj');
 			});
+		},
+		error: function (error) {
+			console.log(error);
+		}
+	});
+}
+
+function savePerCategoryAverage(lastEntryId, count, perCategoryAverage) {
+	$.ajax({
+		type: "POST",
+		url: "SavePerCategoryAverage.php",
+		data: { stud_res_id: lastEntryId, stud_res_cat: count, stud_res_cat_ave: perCategoryAverage },
+		dataType: "json",
+		success: function (result) {
+			if (result[0].status == 1) {
+				window.location.href = "UserLogout.php";
+			}
 		},
 		error: function (error) {
 			console.log(error);

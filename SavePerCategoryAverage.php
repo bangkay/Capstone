@@ -1,19 +1,17 @@
 <?php
 include("config_db.php");
 
-$a = $_POST['A'];
-$b = $_POST['B'];
-$c = $_POST['C'];
-$d = $_POST['D'];
-$e = $_POST['E'];
+$stud_res_id = $_POST['stud_res_id'];
+$stud_res_cat = $_POST['stud_res_cat'];
+$stud_res_cat_ave = $_POST['stud_res_cat_ave'];
 
-$query = "INSERT INTO result_student(A, B, C, D, E) VALUES('".$a."', '".$b."', '".$c."', '".$d."', '".$e."')";
+$query = "INSERT INTO result_student_per_category(stud_res_id, stud_res_cat, stud_res_cat_ave) VALUES('".$stud_res_id."', '".$stud_res_cat."', '".$stud_res_cat_ave."')";
 mysql_query($query);
 
 $lastId = mysql_insert_id();
 
 $array[] = array('status' => 1,
-				 'messsage' => "Average per category save.");
+				 'message' => "Average per category save.");
 				
 echo json_encode($array);
 ?>
