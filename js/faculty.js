@@ -68,7 +68,7 @@ function addFaculty(teacher_name, dept_name) {
 			if (result[0].status == 1) {
 				alert(result[0].message);
 				
-				window.location.href = "http://localhost/evaluation-system/faculty.php";
+				window.location.href = "http://localhost/capstone/faculty.php";
 			}
 		},
 		error: function (error) {

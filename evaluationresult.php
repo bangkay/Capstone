@@ -6,15 +6,33 @@
 <?php include("navigation.php"); ?>
 <!-- END -->
 
+<!-- PHP SCRIPT -->
+<?php
+include("config_db.php");
+
+$teacherId = $_GET['teacherid'];
+
+$query = mysql_query("SELECT F_Fullname FROM faculty WHERE F_ID = '".$teacherId."' ");
+
+while ($row = mysql_fetch_array($query))
+{
+	$fullname = $row['F_Fullname'];
+}
+?>
+<!-- END -->
+
 <!-- CONTENT -->
 <div id="page-wrapper">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">Teacher Evaluation Results</h1>
+				<h1 class="page-header">
+					<?php echo $fullname; ?>
+					<input type="hidden" id="teacherid" value="<?php echo $teacherId; ?>" />
+				</h1>
 				<ol class="breadcrumb">
 					<li class="active">
-						<i class="fa fa-dashboard"></i> Dashboard / Teacher's Evaluation Results
+						<i class="fa fa-dashboard"></i> Dashboard / Student Evaluation Results / <?php echo $fullname; ?>
 					</li>
 				</ol>
 			</div>
@@ -22,40 +40,10 @@
 		
 		<!-- Options -->
 		<div class="row">
-			<div class="col-lg-12">
-				<div class="table-responsive">
-					<table class="table table-bordered table-hover table-striped">
-						<thead>
-							<tr>
-								<th>Fullname</th>
-								<th>Options</th>
-							</tr>
-						</thead>
-						<tbody>
-							<?php
-								include("config_db.php");
-								
-								$query = mysql_query("SELECT * FROM faculty");
-								while($row = mysql_fetch_array($query))
-								{
-							?>
-								<tr>
-									<td><?php echo $row['F_Fullname']; ?></td>
-									<td><a href="evaluationresult.php?teacherid=<?php echo $row['F_ID'] ?>">View Result</a></td>
-								</tr>
-							<?php } ?>
-						</tbody>
-					</table>
-				</div>
-				<!--
-				<ul class="option-list">
-					<li>
-						<select id="drpTeacher" class="form-control">
-							<option value="Select">Select..</option>
-						</select>
-					</li>
-				</ul>
-				-->
+			<div class="col-lg-3">
+				<select id="drpSubjects" class="form-control">
+					<option value="Select">Select...</option>
+				</select>
 			</div>
 		</div>
 		
@@ -63,14 +51,16 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="result-container clearfix" id="resultContainer">
+					<!--
 					<div class="form-group">
 						<p id="txtTeacherName"></p>
 					</div>
 					<div class="form-group">
-						<p>Student Evaluation Result</p>
-					</div>
-					<div class="form-group">
 						<p id="txtsubjectName"></p>
+					</div>
+					-->
+					<div class="form-group">
+						<p>Student Evaluation Result</p>
 					</div>
 					<div class="form-group">
 						<div class="rating-container clearfix">

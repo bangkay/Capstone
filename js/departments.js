@@ -46,7 +46,7 @@ function addDepartment(dept_name) {
 			if (result[0].status == 1) {
 				alert(result[0].message);
 				
-				window.location.href = "http://localhost/evaluation-system/department.php";
+				window.location.href = "http://localhost/capstone/department.php";
 			}
 		},
 		error: function (error) {

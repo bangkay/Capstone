@@ -10,8 +10,6 @@
 	<form id= "MyForm" action = "saveQuestion.php " method ="POST">
 		<h4> Question :<input type = "text" id = "question"> </h4>
 		<h4> Category: <input type = "text" id = "category"> </h4>
-		
-		
 			<input type= "button" id ="btnQues" Value = "ADD QUESTION">
 	</form>
 	

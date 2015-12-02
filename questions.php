@@ -79,9 +79,16 @@ if ($_SESSION['isAdminLoggedIn'] === true)
 		<label>Category</label>
 		<select id="selCategory" class="form-control">
 			<option>Select...</option>
-		</select>
-		
-		<br /> 
+		</select>	
+		</br>
+		<label> User </label>
+	<select id="selUser" class="form-control">
+			<option>Select...</option>
+			<option>Student</option>
+			<option>Peer</option>
+			<option>Dean</option>
+		</select>	
+		</br>
 		<label>Question</label>
 		<textarea class="form-control" id="txtQuestion" rows="3" cols="20"></textarea>
 	</div>

@@ -2,6 +2,7 @@ $(document).ready(function () {
 	$('#popupCategory').hide();
 	$('#popupQuestion').hide();
 	
+	// adding category
 	$('#btnAddCategory').click(function () {
 		$('#popupCategory').dialog({
 			autoOpen: true,
@@ -32,15 +33,16 @@ $(document).ready(function () {
 			]
 		});
 	});
-	
+	// pop up for button add question
 	$('#btnAddQuestion').click(function () {
 		getCategories();
+	
 		
 		$('#popupQuestion').dialog({
 			autoOpen: true,
 			resizable: false,
 			width: 400,
-			height: 320,
+			height:400,
 			title: "Add Question",
 			buttons: [
 				{
@@ -66,6 +68,8 @@ $(document).ready(function () {
 			]
 		});
 	});
+
+
 });
 
 function addCategory(category) {
@@ -81,7 +85,7 @@ function addCategory(category) {
 			if (result[0].status == 1) {
 				alert(result[0].message);
 				
-				window.location.href = "http://localhost/evaluation-system/questions.php";
+				window.location.href = "http://localhost/capstone/questions.php";
 			}
 		},
 		error: function (error) {
@@ -103,7 +107,7 @@ function addQuestion(category, question) {
 			if (result[0].status == 1) {
 				alert(result[0].message);
 				
-				window.location.href = "http://localhost/evaluation-system/questions.php";
+				window.location.href = "http://localhost/capstone/questions.php";
 			}
 		},
 		error: function (error) {

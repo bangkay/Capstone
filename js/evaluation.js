@@ -24,6 +24,7 @@ $(document).ready(function () {
 		var count = 1;
 		var subItemCount = 0;
 		var perCategoryRunningTotal = 0;
+		var category = "";
 		var perCategoryAverage = 0;
 		var catRunningTotal = 0;
 		
@@ -122,6 +123,8 @@ $(document).ready(function () {
 						var catSubItems = $('#items').find('tr.category_questions' + count);
 						subItemCount = 0;
 						perCategoryRunningTotal = 0;
+						category = $(value).text();
+						console.log($(category).html(category));
 						
 						$.each(catSubItems, function (index, value) {
 							var $tds = $(this).find('td');
@@ -239,15 +242,15 @@ function getCurrentRecordForSubjects(student_id, teacher_id) {
 	});
 }
 
-function savePerCategoryAverage(lastEntryId, count, perCategoryAverage) {
+function savePerCategoryAverage(lastEntryId, category, perCategoryAverage) {
 	$.ajax({
 		type: "POST",
 		url: "SavePerCategoryAverage.php",
-		data: { stud_res_id: lastEntryId, stud_res_cat: count, stud_res_cat_ave: perCategoryAverage },
+		data: { stud_res_id: lastEntryId, stud_res_cat: category, stud_res_cat_ave: perCategoryAverage },
 		dataType: "json",
 		success: function (result) {
 			if (result[0].status == 1) {
-				window.location.href = "UserLogout.php";
+				//window.location.href = "UserLogout.php";
 			}
 		},
 		error: function (error) {

@@ -17,6 +17,7 @@
 	<script src="js/departments.js"></script>
 	<script src="js/faculty.js"></script>
 	<script src="js/evaluationresult.js"></script>
+	<script src="js/teacherevaluationresult.js"></script>
 	
 	<!-- Custom CSS -->
 	<link href="css/customcss.css" rel="stylesheet">
