@@ -3,12 +3,14 @@ include("config_db.php");
 
 $teacherId = $_GET['teacherId'];
 $subjectId = $_GET['subjectId'];
+$semesterId = $_GET['semesterId'];
+$schoolYr = $_GET['schoolYear'];
 
 $query = "SELECT AVG(Res_Score),
 				 Res_Remarks
 		  FROM result_student
 		  WHERE 
-			F_ID = '".$teacherId."' AND S_ID = '".$subjectId."' ";
+			F_ID = '".$teacherId."' AND S_ID = '".$subjectId."' AND Sem_ID = '".$semesterId."' AND sch_year = '".$schoolYr."' ";
 
 $result = mysql_query($query);
 

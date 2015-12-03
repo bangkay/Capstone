@@ -18,9 +18,7 @@ ul.option-list li {
 
 .result-container {
 	padding: 5px;
-	width: 500px;
 	border: 1px solid #000;
-	margin: 0 auto;
 }
 
 .details-container {
@@ -48,4 +46,17 @@ ul.option-list li {
 
 th.header {
 	text-align: center;
+}
+
+table#avgTable {
+	width: 100%;
+}
+
+table#avgTable thead tr th, table#avgTable tbody tr td {
+	text-align: center !important;
+}
+
+#dlgEvalResult {
+	height: 200px;
+	border: 1px solid #000; 
 }

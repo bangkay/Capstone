@@ -42,8 +42,26 @@ while ($row = mysql_fetch_array($query))
 		<div class="row">
 			<div class="col-lg-3">
 				<select id="drpSubjects" class="form-control">
-					<option value="Select">Select...</option>
+					<option value="Select">Select Subject</option>
 				</select>
+			</div>
+			<div class="col-lg-3">
+				<select id="drpSem" class="form-control">
+					<option value="Select">Select Semester</option>
+					<option value="1">1</option>
+					<option value="2">2</option>
+				</select>
+			</div>
+			<div class="col-lg-3">
+				<select id="drpSY" class="form-control">
+					<option value="Select">Select School year</option>
+					<option value="2015-2016">2015-2016</option>
+					<option value="2015-2016">2016-2017</option>
+					<option value="2015-2016">2017-2018</option>
+				</select>
+			</div>
+			<div class="col-lg-3">
+				<input type="button" class="form-control" value="Show" id="btnShowResult" />
 			</div>
 		</div>
 		
@@ -69,7 +87,19 @@ while ($row = mysql_fetch_array($query))
 					</div>
 					<div class="form-group">
 						<div class="details-container clearfix">
-							<a href="#">View Details</a>
+							<a href="#" id="lnkViewDetils">View Details</a>
+						</div>
+						<div class="form-group">
+							<div id="dlgEvalResult">
+								<table id="avgTable">
+									<thead>
+										<tr></tr>
+									</thead>
+									<tbody>
+										<tr></tr>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>

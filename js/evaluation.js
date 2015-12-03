@@ -32,6 +32,9 @@ $(document).ready(function () {
 		var subjectId = $('#drpSubj').val();
 		var score = 0;
 		
+		var semId = 0;
+		var schYear = "";
+		
 		$.each(rows, function (index, value) {
 			var $tds = $(this).find('td');
 			
@@ -105,11 +108,13 @@ $(document).ready(function () {
 		facultyId = teacherId;
 		subjectId = $('#drpSubj').val();
 		score = runningTotal;
+		semId = $('#lblSemId').text();
+		schYear = $('#lblSchYear').text();
 		
 		$.ajax({
 			type: "POST",
 			url: "SaveEvaluation.php",
-			data: { facultyId: facultyId, subjectId: subjectId, score: score, remarks: remarks },
+			data: { facultyId: facultyId, subjectId: subjectId, score: score, remarks: remarks, semId: semId, schYear: schYear },
 			dataType: "json",
 			success: function (result) {
 				if (result[0].status == 1) {
@@ -118,13 +123,11 @@ $(document).ready(function () {
 					
 					// Get score per category
 					var catHeaders = $('#items').find('tr td p.category-header');
-						
+					
 					$.each(catHeaders, function (index, value) {
 						var catSubItems = $('#items').find('tr.category_questions' + count);
 						subItemCount = 0;
 						perCategoryRunningTotal = 0;
-						category = $(value).text();
-						console.log($(category).html(category));
 						
 						$.each(catSubItems, function (index, value) {
 							var $tds = $(this).find('td');
@@ -195,7 +198,9 @@ $(document).ready(function () {
 							
 						perCategoryAverage = perCategoryRunningTotal / subItemCount;
 						
-						savePerCategoryAverage(lastEntryId, count, perCategoryAverage);
+						category = $(value).text();
+						
+						savePerCategoryAverage(lastEntryId, category, perCategoryAverage, semId, schYear);
 						
 						count++;
 					});
@@ -242,15 +247,21 @@ function getCurrentRecordForSubjects(student_id, teacher_id) {
 	});
 }
 
-function savePerCategoryAverage(lastEntryId, category, perCategoryAverage) {
+function savePerCategoryAverage(lastEntryId, category, perCategoryAverage, semesterId, schoolYear) {
 	$.ajax({
 		type: "POST",
 		url: "SavePerCategoryAverage.php",
-		data: { stud_res_id: lastEntryId, stud_res_cat: category, stud_res_cat_ave: perCategoryAverage },
+		data: { 
+			stud_res_id: lastEntryId,
+			stud_res_cat: category,
+			stud_res_cat_ave: perCategoryAverage,
+			semesterId: semesterId,
+			schoolYear: schoolYear
+		},
 		dataType: "json",
 		success: function (result) {
 			if (result[0].status == 1) {
-				//window.location.href = "UserLogout.php";
+				window.location.href = "UserLogout.php";
 			}
 		},
 		error: function (error) {

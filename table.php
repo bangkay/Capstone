@@ -33,17 +33,29 @@ if ($_SESSION['isLoggedIn'] === true)
 	<div>
 		<input type="hidden" id="txtStudId" value="<?php echo $_SESSION['studentId']; ?>" />
 	</div>
-	<div>
-		<label>Teacher</label>
-		<select id="drpTeacher">
-			<option>Select..</option>
-		</select>
-	</div>
-	<div>
-		<label>Subject</label>
-		<select id="drpSubj">
-			<option>Select..</option>
-		</select>
+	<div class="clearfix">
+		<div class="pull-left">
+			<div>
+				<label>Teacher</label>
+				<select id="drpTeacher">
+					<option>Select..</option>
+				</select>
+			</div>
+			<div>
+				<label>Subject</label>
+				<select id="drpSubj">
+					<option>Select..</option>
+				</select>
+			</div>
+		</div>
+		<div class="pull-right">
+			<div class="pull-left">
+				<label>Sem Id: <p id="lblSemId"><?php echo $_SESSION['semId']; ?></p></label>
+			</div>
+			<div class="pull-right">
+				<label>School Year: <p id="lblSchYear"><?php echo $_SESSION['sch_year']; ?></p></label>
+			</div>
+		</div>
 	</div>
 	
 	

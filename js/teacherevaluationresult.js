@@ -1,14 +1,34 @@
 $(document).ready(function () {
 	$('#resultContainer').hide();
+	$('#dlgEvalResult').hide();
 	
-	var teacherid = $('#teacherid').val();
+	var teacherid = parseInt($('#teacherid').val());
+	var subjectid = 0;
+	var semesterid = 0;
+	var schyear = "";
 	
 	getInstructorSubjects(teacherid);
 	
 	$('#drpSubjects').change(function () {
-		var subject_id = parseInt($('#drpSubjects').val());
+		subjectid = parseInt($('#drpSubjects').val());
+	});
+	
+	$('#drpSem').change(function () {
+		semesterid = parseInt($('#drpSem').val());
+	});
+	
+	$('#drpSY').change(function () {
+		schyear = $('#drpSY').val();
+	});
+	
+	$('#btnShowResult').click(function () {
+		getSubjectEvaluationResult(teacherid, subjectid, semesterid, schyear);
+	});
+	
+	$('#lnkViewDetils').click(function () {
+		$('#dlgEvalResult').show();
 		
-		getSubjectEvaluationResult(teacherid, subject_id);
+		getEvaluationAveragePerCategory(teacherid, subjectid, semesterid, schyear);
 	});
 });
 
@@ -29,19 +49,40 @@ function getInstructorSubjects(teacherId) {
 	});
 }
 
-function getSubjectEvaluationResult(teacher_id, subject_id) {
+function getSubjectEvaluationResult(teacher_id, subject_id, semester_id, school_year) {
 	$('#resultContainer').show();
 	
 	$.ajax({
 		type: "GET",
 		url: "GetTeachersEvaluationResult.php",
-		data: { teacherId: teacher_id, subjectId: subject_id },
+		data: { teacherId: teacher_id, subjectId: subject_id, semesterId: semester_id, schoolYear: school_year },
 		dataType: "json",
 		success: function (result) {
+			$('#txtscore').text(result[0].Eval_Score);
+			$('#txtremarks').text(result[0].Remarks);
+		},
+		error: function (error) {
+			console.log(error);
+		}
+	});
+}
+
+function getEvaluationAveragePerCategory(facultyid, subjectid, semesterid, schyear) {
+	$.ajax({
+		type: "GET",
+		url: "GetEvaluationAveragePerCategory.php",
+		data: { facultyid: facultyid, subjectid: subjectid, semesterid: semesterid, schyear: schyear },
+		dataType: "json",
+		success: function (result) {
+			var header = $('table#avgTable thead tr');
+			
 			$.each(result, function (index, value) {
-				$('#txtscore').text(value.Eval_Score);
-				$('#txtremarks').text(value.Remarks);
-				
+				$('<th>' + value.Category + '</th>').appendTo(header);
+			});
+			
+			var body = $('table#avgTable tbody tr');
+			$.each(result, function (index, value) {
+				$('<td>' + value.Average + '</td>').appendTo(body);
 			});
 		},
 		error: function (error) {
