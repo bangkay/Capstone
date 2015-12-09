@@ -33,9 +33,13 @@
 						</thead>
 						<tbody>
 							<?php
+								// Include config_db.php file for database connection configuration
 								include("config_db.php");
 								
+								// Query for retrieving faculty
 								$query = mysql_query("SELECT * FROM faculty");
+								
+								// Retrieve and display faculty from query
 								while($row = mysql_fetch_array($query))
 								{
 							?>
@@ -47,15 +51,6 @@
 						</tbody>
 					</table>
 				</div>
-				<!--
-				<ul class="option-list">
-					<li>
-						<select id="drpTeacher" class="form-control">
-							<option value="Select">Select..</option>
-						</select>
-					</li>
-				</ul>
-				-->
 			</div>
 		</div>
 		
@@ -89,10 +84,12 @@
 </div>
 <!-- END -->
 
+<!-- POP UP DIALOG -->
 <div id="popupDepartment">
 	<label>Department</label>
 	<input type="text" class="form-control" id="txtDept" />
 </div>
+<!-- END -->
 
 <!-- FOOTER -->
 <?php include("footer.php"); ?>

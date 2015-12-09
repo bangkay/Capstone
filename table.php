@@ -1,8 +1,12 @@
 <?php
+// Start session fur current student
 session_start();
 
+// Check if isLoggedIn session variable is true
+// if true, load evaluation UI
 if ($_SESSION['isLoggedIn'] === true) 
 {
+	// Include config_db.php file for database connection configuration
 	include("config_db.php");
 ?>
 <!DOCTYPE html>
@@ -31,8 +35,13 @@ if ($_SESSION['isLoggedIn'] === true)
 
 <div style="width: 800px; margin: 0 auto;">
 	<div>
-		<input type="hidden" id="txtStudId" value="<?php echo $_SESSION['studentId']; ?>" />
+		<input type="hidden" id="txtStudId" value="<?php echo $_SESSION['studentId']; // Hide student id ?>" />
 	</div>
+	
+	<div class = "col-lg-12"> 
+			<h1><center>Teacher Evaluation Form</center> </h1>
+	</div>
+	
 	<div class="clearfix">
 		<div class="pull-left">
 			<div>
@@ -50,10 +59,10 @@ if ($_SESSION['isLoggedIn'] === true)
 		</div>
 		<div class="pull-right">
 			<div class="pull-left">
-				<label>Sem Id: <p id="lblSemId"><?php echo $_SESSION['semId']; ?></p></label>
+				<label>Sem Id: <p id="lblSemId"><?php echo $_SESSION['semId']; // Display semester id ?></p></label>
 			</div>
 			<div class="pull-right">
-				<label>School Year: <p id="lblSchYear"><?php echo $_SESSION['sch_year']; ?></p></label>
+				<label>School Year: <p id="lblSchYear"><?php echo $_SESSION['sch_year']; // Display school year ?></p></label>
 			</div>
 		</div>
 	</div>
@@ -76,9 +85,13 @@ if ($_SESSION['isLoggedIn'] === true)
 				$i=1;
 				$updateField = 1;
 				
+				// Query to retrieve question categories
 				$category_query = mysql_query("SELECT DISTINCT Ques_Category FROM question");
+				
+				// Loop query result
 				while ($categories = mysql_fetch_array($category_query))
 				{
+					// Display category header in table
 					echo '<tr>';
 					echo '<td align="center">'.$i.'</td>';
 					echo '<td><p class="category-header">'.$categories['Ques_Category'].'</p> <input type="hidden" value="'.$i.'"></td>';
@@ -89,10 +102,14 @@ if ($_SESSION['isLoggedIn'] === true)
 					echo '<td></td>';
 					echo '</tr>';
 					
+					// Query to retrieve questions per category
 					$question_query = mysql_query("SELECT Ques_Desc FROM question WHERE Ques_Category = '".$categories['Ques_Category']."' ");
 					$question_num = 1;
+					
+					// Loop query result
 					while ($questions = mysql_fetch_array($question_query))
 					{
+						// Display question in table
 						echo '<tr class="category_questions'.$i.'">';
 						echo '<td>'.$question_num.'</td>';
 						echo '<td>'.$questions['Ques_Desc'].'</td>';
@@ -116,13 +133,14 @@ if ($_SESSION['isLoggedIn'] === true)
 
 </div>
 </body>
-<?php include("footer.php")?>
+<?php include("footer.php") // Include footer.php file ?>
 
 </html>
 <?php 
 }
 else
 {
+	// Redirect to index.php if isLoggedIn session variable if false
 	header("location: index.php");
 }	
 ?>

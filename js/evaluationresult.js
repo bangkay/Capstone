@@ -1,9 +1,12 @@
 $(document).ready(function () {
 	$('#resultContainer').hide();
 	
+	// Call to getListOfInstructors() function
 	getListOfInstructors();
 });
 
+/* FUNCTIONS */
+// Function to get list of instructors
 function getListOfInstructors() {
 	$.ajax({
 		type: "GET",
@@ -19,3 +22,4 @@ function getListOfInstructors() {
 		}
 	});
 }
+/* END */

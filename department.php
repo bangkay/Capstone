@@ -1,8 +1,11 @@
 <?php
+// Start session
 session_start();
 
+// Check if session variable isAdminLoggedIn is equal to true
 if ($_SESSION['isAdminLoggedIn'] === true)
 {
+	// Include header.php and navigation.php files
 	include("header.php");
 	include("navigation.php");
 ?>
@@ -43,9 +46,13 @@ if ($_SESSION['isAdminLoggedIn'] === true)
 							</thead>
 							<tbody>
 								<?php
+									// Include config_db.php file for database connection configuration
 									include("config_db.php");
 									
+									// Query for retrieving departments
 									$query = mysql_query("SELECT * FROM department");
+									
+									// Retrieve and display department from query
 									while($row = mysql_fetch_array($query))
 									{
 								?>
@@ -63,6 +70,7 @@ if ($_SESSION['isAdminLoggedIn'] === true)
 	</div>
 	<!-- END -->
 
+	<!-- POP UP DIALOGS -->
 	<div id="popupDepartment">
 		<label>Department</label>
 		<input type="text" class="form-control" id="txtDept" />
@@ -79,10 +87,13 @@ if ($_SESSION['isAdminLoggedIn'] === true)
 		<label>Subject</label>
 		<input type="text" id="txtSubj" class="form-control" />
 	</div>
+	<!-- END -->
 <?php
+	// Include footer.php file
 	include("footer.php");
 }
 else
 {
+	// Redirect to index.php id session variable isAdminLoggedIn is false
 	header("location: index.php");
 }?>

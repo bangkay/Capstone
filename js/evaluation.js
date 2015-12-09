@@ -2,14 +2,19 @@ $(document).ready(function () {
 	var studId = 0;
 	var teacherId = 0;
 	
+	// Get student id
 	studId = parseInt($('#txtStudId').val());
+	
+	// Call to getCurrentRecordForInstructors() function
 	getCurrentRecordForInstructors(studId);
 	
 	$('#drpTeacher').change(function () {
 		$('#drpSubj').empty();
 		
+		// Get teacher id
 		teacherId = parseInt($('#drpTeacher').val());
 		
+		// Call to getCurrentRecordForSubjects() function
 		getCurrentRecordForSubjects(studId, teacherId);
 	});
 	
@@ -19,7 +24,6 @@ $(document).ready(function () {
 		var remarks = "";
 		var question_count = 0;
 		var lastEntryId = 0;
-		var rows = $('#items').find('tr');
 		
 		var count = 1;
 		var subItemCount = 0;
@@ -35,6 +39,9 @@ $(document).ready(function () {
 		var semId = 0;
 		var schYear = "";
 		
+		var rows = $('#items').find('tr');
+		
+		// Loop through each radio button per question and get value of selected radio button
 		$.each(rows, function (index, value) {
 			var $tds = $(this).find('td');
 			
@@ -92,25 +99,28 @@ $(document).ready(function () {
 			question_count++;
 		});
 		
-		if (runningTotal >= 40 && runningTotal <= 50)
+		// Get remarks according runningTotal value
+		if (runningTotal >= 161 && runningTotal <= 200)
 			remarks = "Excellent";
-		else if (runningTotal >= 30 && runningTotal <= 39)
+		else if (runningTotal >= 121 && runningTotal <= 160)
 			remarks = "Very Satisfactory";
-		else if (runningTotal >= 20 && runningTotal <= 29)
+		else if (runningTotal >= 81 && runningTotal <= 120)
 			remarks = "Very Good";
-		else if (runningTotal >= 10 && runningTotal <= 19)
+		else if (runningTotal >= 41 && runningTotal <= 80)
 			remarks = "Good";
-		else if (runningTotal >= 1 && runningTotal <= 9)
+		else if (runningTotal >= 1 && runningTotal <= 40)
 			remarks = "Need Improvement"
 		else
 			remarks = "";
 		
+		// Assign values to faculty id, subject id, score, semester id and school year
 		facultyId = teacherId;
 		subjectId = $('#drpSubj').val();
 		score = runningTotal;
 		semId = $('#lblSemId').text();
 		schYear = $('#lblSchYear').text();
 		
+		// Ajax script to save student evaluation for instructors
 		$.ajax({
 			type: "POST",
 			url: "SaveEvaluation.php",
@@ -124,6 +134,7 @@ $(document).ready(function () {
 					// Get score per category
 					var catHeaders = $('#items').find('tr td p.category-header');
 					
+					// Loop through each question radio button and calculate average per category questions
 					$.each(catHeaders, function (index, value) {
 						var catSubItems = $('#items').find('tr.category_questions' + count);
 						subItemCount = 0;
@@ -195,11 +206,13 @@ $(document).ready(function () {
 								
 							subItemCount++;
 						});
-							
+						
+						// Calculate average per category
 						perCategoryAverage = perCategoryRunningTotal / subItemCount;
 						
 						category = $(value).text();
 						
+						// Call to savePerCategoryAverage() function
 						savePerCategoryAverage(lastEntryId, category, perCategoryAverage, semId, schYear);
 						
 						count++;
@@ -213,6 +226,8 @@ $(document).ready(function () {
 	});	
 });
 
+/* FUNCTIONS */
+// Function to get current instructors
 function getCurrentRecordForInstructors(student_id) {
 	$.ajax({
 		type: "GET",
@@ -230,6 +245,7 @@ function getCurrentRecordForInstructors(student_id) {
 	});
 }
 
+// Function to get current subjects
 function getCurrentRecordForSubjects(student_id, teacher_id) {
 	$.ajax({
 		type: "GET",
@@ -247,6 +263,7 @@ function getCurrentRecordForSubjects(student_id, teacher_id) {
 	});
 }
 
+// Function to save average per category
 function savePerCategoryAverage(lastEntryId, category, perCategoryAverage, semesterId, schoolYear) {
 	$.ajax({
 		type: "POST",
@@ -269,3 +286,4 @@ function savePerCategoryAverage(lastEntryId, category, perCategoryAverage, semes
 		}
 	});
 }
+/* END */

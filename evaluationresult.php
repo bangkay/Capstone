@@ -8,14 +8,19 @@
 
 <!-- PHP SCRIPT -->
 <?php
+// Include config_db.php file for database connection configuration
 include("config_db.php");
 
+// Get teacher id
 $teacherId = $_GET['teacherid'];
 
+// Query to retrieve faculty name
 $query = mysql_query("SELECT F_Fullname FROM faculty WHERE F_ID = '".$teacherId."' ");
 
+// Loop query result
 while ($row = mysql_fetch_array($query))
 {
+	// Assign
 	$fullname = $row['F_Fullname'];
 }
 ?>
@@ -109,10 +114,12 @@ while ($row = mysql_fetch_array($query))
 </div>
 <!-- END -->
 
+<!-- POP UP DIALOG -->
 <div id="popupDepartment">
 	<label>Department</label>
 	<input type="text" class="form-control" id="txtDept" />
 </div>
+<!-- END -->
 
 <!-- FOOTER -->
 <?php include("footer.php"); ?>

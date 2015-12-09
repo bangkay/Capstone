@@ -1,4 +1,7 @@
 $(document).ready(function () {
+  //getSubjectEvaluationResult(teacherid, subjectid, semesterid, schyear).show();
+
+	
 	$('#resultContainer').hide();
 	$('#dlgEvalResult').hide();
 	

@@ -44,8 +44,8 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="intro-message">
-                        <h1>Samson Polytechnice College</h1>
-                        <h3>Faculty Evaluation</h3>
+                        <h1>Teacher’s Performance Evaluation System</h1>
+                        <h3>Samson Polytechnice College of Davao</h3>
                         <hr class="intro-divider">
                         <ul class="list-inline intro-social-buttons">
                             <li>
@@ -55,7 +55,7 @@
                                 <a href="student-Login.php" class="btn btn-default btn-lg"><i class="fa fa-users"></i> <span class="network-name">Student Log-in</span></a>
                             </li>
 							 <li>
-                                <a href="studentlogin.php" class="btn btn-default btn-lg"><i class="fa fa-users"></i> <span class="network-name">Peer-to-Peer</span></a>
+                                <a href="student-Login.php" class="btn btn-default btn-lg"><i class="fa fa-users"></i> <span class="network-name">Peer-to-Peer</span></a>
                             </li>
                         </ul>
                     </div>

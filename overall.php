@@ -1,30 +1,22 @@
-<!-- CONTENT -->
-<div id="page-wrapper">
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-lg-12">
-				<h1 class="page-header">
-					<?php echo $fullname; ?>
-					<input type="hidden" id="teacherid" value="<?php echo $teacherId; ?>" />
-				</h1>
-				<ol class="breadcrumb">
-					<li class="active">
-						<i class="fa fa-dashboard"></i> Dashboard / Student Evaluation Results / <?php echo $fullname; ?>
-					</li>
-				</ol>
-			</div>
-		</div>
-		
-		<!-- Options -->
-		<div class="row">
-			<div class="col-lg-3">
-				<select id="drpSubjects" class="form-control">
-					<option value="Select">Select...</option>
-				</select>
-			</div>
-		</div>
-		
-		<!-- Evaluation Result -->
+<html>
+
+<!-- HEADER -->
+<?php include("header.php"); ?>
+<!-- END -->
+
+<!-- NAVIGATION -->
+<?php include("navigation.php"); ?>
+<!-- END -->
+
+<?php
+
+
+?>
+	<div>
+		<input type="hidden" id="teacherId" value="<?php echo $_SESSION['teacherId']; // Hide student id ?>" />
+	</div>
+	
+	
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="result-container clearfix" id="resultContainer">
@@ -46,11 +38,29 @@
 					</div>
 					<div class="form-group">
 						<div class="details-container clearfix">
-							<a href="#">View Details</a>
+							<a href="#" id="lnkViewDetils">View Details</a>
+						</div>
+						<div class="form-group">
+							<div id="dlgEvalResult">
+								<table id="avgTable">
+									<thead>
+										<tr></tr>
+									</thead>
+									<tbody>
+										<tr></tr>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-    </div>
-</div>
+
+
+
+
+
+
+
+</html>

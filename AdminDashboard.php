@@ -1,8 +1,11 @@
 <?php
+// Start session
 session_start();
 
+// Check if session variable isAdminLoggedIn is equal to true
 if ($_SESSION['isAdminLoggedIn'] === true)
 {
+	// Include header.php and navigation.php files
 	include("header.php");
 	include("navigation.php");
 ?>
@@ -125,9 +128,11 @@ if ($_SESSION['isAdminLoggedIn'] === true)
         <!-- /#page-wrapper -->
 <!-- END -->
 <?php
+	// Include footer.php file
 	include("footer.php");
 }
 else
 {
+	// Redirect to index.php if session variable isAdminLoggedIn is false
 	header("location: index.php");
 }?>

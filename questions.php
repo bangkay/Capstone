@@ -47,9 +47,13 @@ if ($_SESSION['isAdminLoggedIn'] === true)
 							</thead>
 							<tbody>
 								<?php
+									// Include config_db.php file for database connection configuration
 									include("config_db.php");
 									
+									// Query for questions
 									$query = mysql_query("SELECT * FROM question");
+									
+									// Retrieve and display questions from query
 									while($row = mysql_fetch_array($query))
 									{
 								?>
@@ -70,6 +74,7 @@ if ($_SESSION['isAdminLoggedIn'] === true)
 	</div>
 	<!-- END -->
 
+	<!-- POP UP DIALOGS -->
 	<div id="popupCategory">
 		<label>Category</label>
 		<input type="text" class="form-control" id="txtCat" />
@@ -92,10 +97,13 @@ if ($_SESSION['isAdminLoggedIn'] === true)
 		<label>Question</label>
 		<textarea class="form-control" id="txtQuestion" rows="3" cols="20"></textarea>
 	</div>
+	<!-- END -->
 <?php
+	// Include footer.php file
 	include("footer.php");
 }
 else
 {
+	// Redirect to index.php id session variable isAdminLoggedIn is false
 	header("location: index.php");
 }?>

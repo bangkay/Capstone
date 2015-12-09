@@ -1,8 +1,11 @@
 $(document).ready(function () {
 	$('#popupDepartment').hide();
 	$('#popupDeptSubjects').hide();
-	
+
+	// Adding department
 	$('#btnAddDepartment').click(function () {
+		
+		// Department dialog
 		$('#popupDepartment').dialog({
 			autoOpen: true,
 			resizable: false,
@@ -13,12 +16,15 @@ $(document).ready(function () {
 				{
 					text: "Add",
 					click: function() {
+						// Get department name
 						var dept_name = $('#txtDept').val();
 						
+						// Check if department name is null
 						if (dept_name == null || dept_name == "") {
 							alert();
 						}
 						else {
+							// Call to addDepartment() function
 							addDepartment(dept_name);						
 						}
 					}
@@ -33,9 +39,11 @@ $(document).ready(function () {
 		});
 	});
 	
+	// Adding department subjects
 	$('#btnAddDeptSubjects').click(function () {
 		getDepartmentList();
 		
+		// Department Subjects dialog
 		$('#popupDeptSubjects').dialog({
 			autoOpen: true,
 			resizable: false,
@@ -46,9 +54,11 @@ $(document).ready(function () {
 				{
 					text: "Add",
 					click: function() {
+						// Get department id and subject
 						var deptId = $('#drpDept').val();
 						var subj = $('#txtSubj').val();
 						
+						// Call to addDepartmentSubjects() function
 						addDepartmentSubjects(deptId, subj);
 					}
 				},
@@ -63,6 +73,8 @@ $(document).ready(function () {
 	});
 });
 
+/* FUNCTIONS */
+// Function for adding department
 function addDepartment(dept_name) {
 	var status = 0;
 	var message = "";
@@ -85,6 +97,7 @@ function addDepartment(dept_name) {
 	});
 }
 
+// Function for getting department lists
 function getDepartmentList() {
 	$('select#drpDept option').remove();
 	
@@ -105,6 +118,7 @@ function getDepartmentList() {
 	});
 }
 
+// Function for adding subjects per department
 function addDepartmentSubjects(dept_id, subj_name) {
 	$.ajax({
 		type: "POST",
@@ -123,3 +137,4 @@ function addDepartmentSubjects(dept_id, subj_name) {
 		}
 	});
 }
+/* END */

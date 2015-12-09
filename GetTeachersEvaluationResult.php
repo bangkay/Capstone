@@ -10,7 +10,14 @@ $query = "SELECT AVG(Res_Score),
 				 Res_Remarks
 		  FROM result_student
 		  WHERE 
-			F_ID = '".$teacherId."' AND S_ID = '".$subjectId."' AND Sem_ID = '".$semesterId."' AND sch_year = '".$schoolYr."' ";
+			F_ID = '".$teacherId."'";
+
+/*
+$query = "SELECT AVG(Res_Score),
+				 Res_Remarks
+		  FROM result_student
+		  WHERE 
+			F_ID = '".$teacherId."' AND S_ID = '".$subjectId."' AND Sem_ID = '".$semesterId."' AND sch_year = '".$schoolYr."' "; */
 
 $result = mysql_query($query);
 

@@ -2,9 +2,11 @@ $(document).ready(function () {
 	$('#popupFaculty').hide();
 	$('#popupAddFacultySubj').hide();
 	
+	// Adding faculty
 	$('#btnAddFaculty').click(function () {
 		getDepartments();
 		
+		// Faculty dialog
 		$('#popupFaculty').dialog({
 			autoOpen: true,
 			resizable: false,
@@ -15,13 +17,16 @@ $(document).ready(function () {
 				{
 					text: "Add",
 					click: function() {
+						// Get department name and teacher name
 						var dept_name = $('#selDept option:selected').text();
 						var teacher_name = $('#txtTeacherName').val();
 						
+						// Check if department name is null
 						if (teacher_name == null || teacher_name == "") {
 							alert();
 						}
 						else {
+							// Call to addFaculty() function
 							addFaculty(teacher_name, dept_name);						
 						}
 					}
@@ -36,10 +41,12 @@ $(document).ready(function () {
 		});
 	});
 	
+	// Adding faculty 
 	$('#btnAddFacultySubjects').click(function () {
 		getInstructorsList();
 		getSubjectsList();
 		
+		// Faculty dialog
 		$('#popupAddFacultySubj').dialog({
 			autoOpen: true,
 			resizable: false,
@@ -50,11 +57,13 @@ $(document).ready(function () {
 				{
 					text: "Add",
 					click: function() {
+						// Get intrucstor id, subject id, semester id, school year value
 						var instructorId = $('#drpInstructor').val();
 						var subjectId = $('#drpSubject').val();
 						var semesterid = $('#drpSemester').val();
 						var schyear = $('#drpSY').val();
 						
+						// Call to addFacultySubject() function
 						addFacultySubject(instructorId, subjectId, semesterid, schyear);
 					}
 				},
@@ -69,6 +78,8 @@ $(document).ready(function () {
 	});
 });
 
+/* FUNCTIONS */
+// Function to get department
 function getDepartments() {
 	$('#selDept option').remove();
 	
@@ -88,6 +99,7 @@ function getDepartments() {
 	});
 }
 
+// Function to get add faculty
 function addFaculty(teacher_name, dept_name) {
 	var status = 0;
 	var message = "";
@@ -110,6 +122,7 @@ function addFaculty(teacher_name, dept_name) {
 	});
 }
 
+// Function to get instructor list
 function getInstructorsList() {
 	$('#drpInstructor option').remove();
 	
@@ -130,6 +143,7 @@ function getInstructorsList() {
 	});
 }
 
+// Function to get subjects list
 function getSubjectsList() {
 	$('#drpSubject option').remove();
 	
@@ -150,6 +164,7 @@ function getSubjectsList() {
 	});
 }
 
+// Function to get faculty subject
 function addFacultySubject(instructorId, subjectId, semesterid, schyear) {
 	$.ajax({
 		type: "POST",
@@ -168,3 +183,4 @@ function addFacultySubject(instructorId, subjectId, semesterid, schyear) {
 		}
 	});
 }
+/* END */
